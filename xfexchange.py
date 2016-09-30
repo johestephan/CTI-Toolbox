@@ -133,6 +133,7 @@ def getxfid_fromMS(msid):
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
 	data2 = json.loads(data.read())	
+	return data2
 
 def getmsid(msid):
 	furl = "https://api.xforce.ibmcloud.com/vulnerabilities/msid/%s" % msid
@@ -172,10 +173,10 @@ def intrIPs(cat=None):
 			"7" : "Botnet Command and Control Server"}
 	if cat is None:
 		cata = dcata["7"]
-		size = 200
+		size = 45
 	else:
 		cata = dcata[cat]
-		size = 50
+		size = 45
 	datar = dict() 
 	
 	furl = "https://api.xforce.ibmcloud.com/ipr?category=%s&startDate=%s" % (urllib.quote_plus(cata), YEST)

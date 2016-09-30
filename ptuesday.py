@@ -36,7 +36,15 @@ def pt_toWeb(date):
 		''' % (item["id"], item["exploits"], item["affected"], item["severity"], 
 		item["clients"] + " / " +item["servers"], item["title"], ) 
 	return returner
+
+def pt_toWebv2(date):
+	returner = ""
+	for item in getbyDate(date)["getmspatchday"]:
+		print str(item) + "\n\n"
+		returner +=  str(xfexchange.getxfid_fromMS(item["id"]))
+	return returner
 	
+
 	
 parser = OptionParser()
 parser.add_option("-d", "--date", dest="date" , default=None,
