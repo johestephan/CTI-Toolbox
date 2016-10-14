@@ -179,12 +179,15 @@ def intrIPs(cat=None):
 		size = 45
 	datar = dict() 
 	
-	furl = "https://api.xforce.ibmcloud.com/ipr?category=%s&startDate=%s" % (urllib.quote_plus(cata), YEST)
+	furl = "https://api.xforce.ibmcloud.com/ipr?category=%s&startDate=%s&limit=%s" % (urllib.quote_plus(cata), YEST, size)
 	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	data2 = json.loads(data.read())	
-	datar1 = dict(datar.items() + data2.items())
-	datar = datar1
+	try:
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())	
+		datar1 = dict(datar.items() + data2.items())
+		datar = datar1
+	except:
+		datar = "Error conecting API"
 	return datar
 	
 	

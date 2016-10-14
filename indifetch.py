@@ -57,7 +57,7 @@ def getXML(text, ox=None):
         if ox :
             return  " ".join(backset)
         else:
-            return "<xml> %s </xml>" % " ".join(backset)
+            return "%s" % "".join(backset)
         
 def va(text, method=None):
     threatintel = str("".join(getCVE(text)))

@@ -1,10 +1,5 @@
 
 
 def StoXML(selftype, value):
-    return '''
-<indicator>
-<type> %s </type>
-<value> %s </value>
-</indicator>
-''' % (selftype, value)
+    return '''"%s": %s\n''' % (selftype, value)
 
