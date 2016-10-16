@@ -10,10 +10,9 @@ In order to run, you need to create "iprep_conf.py" in the following format
 otx_authkey = ""
 
 #XForce exchange
-auth_key = ""
-auth_pass = ""
 xfex_cred = ""
 
+# Settings for Web-frontend
 LOCAL_IP = "127.0.0.1"
 LOCAL_PORT = "5010"
 

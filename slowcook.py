@@ -50,18 +50,24 @@ def searchHIGHroller(iplist):
         return retdata
 
 def getHIGHroller(limit=8.0):
-    #try:
-        for count in range(1,len(INTRcat)+1):
-            mydata = dict(slowcookINTRIP(str(count)))
-            for Sitem in mydata["rows"]:
-                if "score" in str(Sitem):
-                    if Sitem["score"] > limit:
-                        print '''%s;%s;%s;%s''' % (INTRcat[str(count)], Sitem["ip"], Sitem["score"], Sitem["created"])
-                #except:
-                 #   print "skipped"
-                  #  continue
-    #except:
-        #print "damn"
+    today = datetime.now()
+    HR_jdata = dict()
+    HR_jdata.update({"today" : today})
+    for count in range(1,len(INTRcat)+1):
+        mydata = dict(slowcookINTRIP(str(count)))
+        new_jdata = []
+        for Sitem in mydata["rows"]:
+            if "score" in str(Sitem):
+                if Sitem["score"] > limit:
+                    temp_jdata = [Sitem["ip"], Sitem["score"], Sitem["created"]]
+                    new_jdata.append(temp_jdata)
+                   
+        ret_jdata = {INTRcat[str(count)]:new_jdata }
+        HR_jdata.update(ret_jdata)
+    
+    HR_jdata.update
+    return HR_jdata     
+
     
     
 def slowcookINTRIP(cat="1"):
