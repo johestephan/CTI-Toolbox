@@ -12,11 +12,20 @@ otx_authkey = ""
 #XForce exchange
 xfex_cred = ""
 
-# Settings for Web-frontend
-LOCAL_IP = "127.0.0.1"
+#Virustotal
+vt_key = ""
+
+# config for web, for a href
+LOCAL_LINK = ""
+
+#debug config for web, for a href
+#LOCAL_LINK = "http://127.0.0.1:5010"
 LOCAL_PORT = "5010"
 
-VERSION = "1.0.0 (BETA_1)"
+#slowcook config
+sc_apikey = ""
+
+VERSION = "1.0.4 (BETA_1)"
 ```
 For the needed credentials please sign up at
 * [IBM XForce Exchange](https://exchange.xforce.ibmcloud.com/)
