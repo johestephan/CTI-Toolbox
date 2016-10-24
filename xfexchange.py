@@ -88,6 +88,7 @@ def getip(ip):
 		#return [data2[u"history"][0]["geo"]["country"], data2[u"score"], data2[u"reason"], data2[u"categoryDescriptions"]]
 	except:
 		return [str(data2), "Ups", "Ups", "ups"]
+
 def ixf_IPtoWeb(ip):
 	dataset = getip(ip)
 	return '''<ul><b> %s </b>
@@ -142,6 +143,15 @@ def getmsid(msid):
 	data = urllib2.urlopen(request)
 	data2 = json.loads(data.read())
 	return data2
+
+def getMalw(hash):
+	furl = "https://api.xforce.ibmcloud.com/malware/%s" % hash
+
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	data2 = json.loads(data.read())
+	return data2
+
 
 def getIP(id):
 	furl = "https://api.xforce.ibmcloud.com/casefiles/%s/attachments" % id

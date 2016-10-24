@@ -51,7 +51,17 @@ def URLip(value):
 	data = urllib2.urlopen(request)
 	return json.loads(data.read())
 
+def URL(value):
+	furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/url/%s/general" % value
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	return json.loads(data.read())
 
+def CVE(value):
+	furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/cve/%s/general" % value
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	return json.loads(data.read())
 
 def REip(value):
 	furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/IPv4/%s/reputation" % value
@@ -83,6 +93,13 @@ def getIndicators(id):
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
 	return json.loads(data.read())
+
+def getMalhash(hash):
+	furl = "https://otx.alienvault.com:443/api/v1/indicators/file/%s/analysis" % hash
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	return json.loads(data.read())
+
 
 def parsePulse(data):
 	thisset = dict()
