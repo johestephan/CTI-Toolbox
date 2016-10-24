@@ -119,6 +119,23 @@ def ixf_forWeb(text):
 	<li>Affected: %s</li>
 	<li>STDcode: %s</li></ul>''' % (text, result[0], result[1] , str(", ".join(result[2])),str(", ".join(result[3]))  )
 
+def getURL(url):
+	furl = "https://api.xforce.ibmcloud.com/url/%s" % url 
+
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	data2 = json.loads(data.read())
+	return data2
+
+def getURLm(url):
+	furl = "https://api.xforce.ibmcloud.com/url/malware/%s" % url 
+
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	data2 = json.loads(data.read())
+	return data2
+
+
 def getColl():
 	furl = "https://api.xforce.ibmcloud.com/casefiles/public" 
 

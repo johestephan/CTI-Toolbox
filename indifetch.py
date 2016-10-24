@@ -42,6 +42,13 @@ def getCVE(text):
     return CVElist
 
 
+def getURL(text):
+    URLlist = set()
+    urls = re.compile(r'(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+    for item in urls.findall(text):
+        URLlist.add(item)
+    return URLlist
+
 
 def getXML(text, ox=None):
         backset = set()
