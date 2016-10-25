@@ -71,6 +71,21 @@ def POSTcaseBody(cid, data):
 	return data
 
 
+def getTrend(ip):
+	#try:
+		furl = "https://api.xforce.ibmcloud.com/ipr/%s" % ip
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		date = []
+		score = []
+		for item in data2["history"]:
+			date.append(item["created"])
+			score.append(item["score"])
+		return (date, score)
+	#except:
+		#return [str(data2), "Ups", "Ups", "ups"]
+	
 def getip(ip):
 	try:
 		furl = "https://api.xforce.ibmcloud.com/ipr/%s" % ip
@@ -119,24 +134,45 @@ def ixf_forWeb(text):
 	<li>Affected: %s</li>
 	<li>STDcode: %s</li></ul>''' % (text, result[0], result[1] , str(", ".join(result[2])),str(", ".join(result[3]))  )
 
+def getVulnr():
+	try:
+		furl = "https://api.xforce.ibmcloud.com/vulnerabilities"
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		return data2
+	except:
+		return {"xforce" : "No Data"}	
+
 def getURL(url):
-	furl = "https://api.xforce.ibmcloud.com/url/%s" % url 
-
-	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	data2 = json.loads(data.read())
-	return data2
-
+	try:
+		furl = "https://api.xforce.ibmcloud.com/url/%s" % url 
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		return data2
+	except:
+		return {"xforce" : "No Data"}
+	
 def getURLm(url):
-	furl = "https://api.xforce.ibmcloud.com/url/malware/%s" % url 
-
+	try:
+		furl = "https://api.xforce.ibmcloud.com/url/malware/%s" % url 
+	
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		return data2
+	except:
+		return {"xforce" : "No Data"}
+		
+def getCaseS():
+	furl = "https://api.xforce.ibmcloud.com/casefiles/shared" 
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
 	data2 = json.loads(data.read())
 	return data2
 
-
-def getColl():
+def getCaseP():
 	furl = "https://api.xforce.ibmcloud.com/casefiles/public" 
 
 	request = urllib2.Request(furl, None, headers)
@@ -154,33 +190,41 @@ def getxfid_fromMS(msid):
 	return data2
 
 def getmsid(msid):
-	furl = "https://api.xforce.ibmcloud.com/vulnerabilities/msid/%s" % msid
-
-	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	data2 = json.loads(data.read())
-	return data2
-
+	try:
+		furl = "https://api.xforce.ibmcloud.com/vulnerabilities/msid/%s" % msid
+	
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		return data2
+	except:
+		return {"xforce" : "No Data"}
+	
 def getMalw(hash):
-	furl = "https://api.xforce.ibmcloud.com/malware/%s" % hash
-
-	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	data2 = json.loads(data.read())
-	return data2
-
+	try:
+		furl = "https://api.xforce.ibmcloud.com/malware/%s" % hash
+	
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		return data2
+	except:
+		return {"xforce" : "No Data"}
 
 def getIP(id):
-	furl = "https://api.xforce.ibmcloud.com/casefiles/%s/attachments" % id
-
-	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	data2 = json.loads(data.read())
-	iplist = set()
-	for item in data2["attachments"]:
-		if "IP" in item["report"]["type"]:
-			iplist.add(item["report"]["title"])
-	return iplist
+	try:
+		furl = "https://api.xforce.ibmcloud.com/casefiles/%s/attachments" % id
+	
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		data2 = json.loads(data.read())
+		iplist = set()
+		for item in data2["attachments"]:
+			if "IP" in item["report"]["type"]:
+				iplist.add(item["report"]["title"])
+		return iplist
+	except:
+		return {"xforce" : "No Data"}
 	
 #- Spam
 #- Anonymisation Services
@@ -214,7 +258,7 @@ def intrIPs(cat=None):
 		datar1 = dict(datar.items() + data2.items())
 		datar = datar1
 	except:
-		datar = "Error conecting API"
+		return {"xforce" : "No Data"}
 	return datar
 	
 	
