@@ -4,13 +4,14 @@ import urllib
 import urllib2
 from optparse import OptionParser
 import json
-import hashlib
 import os.path
 import time
 import re
 from datetime import datetime, timedelta
 
 import sys
+
+BASEurl = "https://api.xforce.ibmcloud.com/"
 
 sys.path.append('./')
 import iprep_conf as IC
@@ -24,7 +25,7 @@ headers = {"Authorization": "Basic %s " % IC.xfex_cred,
 		   'User-Agent': 'Mozilla 5.0'}
 
 def getPAM(text):
-	furl = "https://api.xforce.ibmcloud.com/signatures/fulltext?q=%s" % text.strip()
+	furl = BASEurl + "signatures/fulltext?q=%s" % text.strip()
 	
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
@@ -32,7 +33,7 @@ def getPAM(text):
 	return data2["rows"][0]["pamid"].strip()
 
 def getXFD_fromCVE(cve):
-	furl = "https://api.xforce.ibmcloud.com/vulnerabilities/search/%s" % cve.strip()
+	furl = BASEurl + "vulnerabilities/search/%s" % cve.strip()
 	
 	request = urllib2.Request(furl, None, headers)
 	try:
@@ -43,7 +44,7 @@ def getXFD_fromCVE(cve):
 		return "Not found"
 
 def getXFD(pamid):
-	furl = "https://api.xforce.ibmcloud.com/signatures/%s" % pamid
+	furl = BASEurl + "signatures/%s" % pamid
 	
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
@@ -53,7 +54,7 @@ def getXFD(pamid):
 def getFull(xfid):
 	if xfid == "Not found":
 		return xfid
-	furl = "https://api.xforce.ibmcloud.com/vulnerabilities/%s" % xfid
+	furl = BASEurl + "vulnerabilities/%s" % xfid
 	
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
@@ -62,18 +63,17 @@ def getFull(xfid):
 	return [data2[u"description"], data2[u"risk_level"], data2[u"platforms_affected"], data2[u"stdcode"]]
 
 
-def POSTcaseBody(cid, data):
-	furl = "https://api.xforce.ibmcloud.com/casefiles/%s/attachments" % cid
-
-        request = urllib2.Request(furl, data, headers)
-        data = urllib2.urlopen(request)
-        data2 = json.loads(data.read())
-	return data
+def getCase_attachments(Caseid):
+	furl = BASEurl + "casefiles/%s/attachments" % Caseid
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	data2 = json.loads(data.read())
+	return data2
 
 
 def getTrend(ip):
 	#try:
-		furl = "https://api.xforce.ibmcloud.com/ipr/%s" % ip
+		furl = BASEurl + "ipr/%s" % ip
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
 		data2 = json.loads(data.read())
@@ -88,8 +88,8 @@ def getTrend(ip):
 	
 def getip(ip):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/ipr/%s" % ip
-		furl2 = "https://api.xforce.ibmcloud.com/ipr/malware/%s" % ip
+		furl = BASEurl + "ipr/%s" % ip
+		furl2 = BASEurl + "ipr/malware/%s" % ip
 	
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
@@ -136,7 +136,7 @@ def ixf_forWeb(text):
 
 def getVulnr():
 	try:
-		furl = "https://api.xforce.ibmcloud.com/vulnerabilities"
+		furl = BASEurl + "vulnerabilities"
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
 		data2 = json.loads(data.read())
@@ -146,7 +146,7 @@ def getVulnr():
 
 def getURL(url):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/url/%s" % url 
+		furl = BASEurl + "url/%s" % url 
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
 		data2 = json.loads(data.read())
@@ -156,7 +156,7 @@ def getURL(url):
 	
 def getURLm(url):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/url/malware/%s" % url 
+		furl = BASEurl + "url/malware/%s" % url 
 	
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
@@ -165,24 +165,34 @@ def getURLm(url):
 	except:
 		return {"xforce" : "No Data"}
 		
-def getCaseS():
-	furl = "https://api.xforce.ibmcloud.com/casefiles/shared" 
+def getCase_Shared():
+	furl = BASEurl + "casefiles/shared" 
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
 	data2 = json.loads(data.read())
 	return data2
 
-def getCaseP():
-	furl = "https://api.xforce.ibmcloud.com/casefiles/public" 
+def getCase_Public():
+	furl = BASEurl + "casefiles/public" 
 
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
 	data2 = json.loads(data.read())
 	return data2
-	#return (data2["casefiles"]["caseFileID"], data2["casefiles"]["title"], data2["casefiles"])
+
+
+
+def getCase_by_Group(groupID):
+	furl = BASEurl + "user/groups/%s/casefiles" % groupID 
+
+	request = urllib2.Request(furl, None, headers)
+	data = urllib2.urlopen(request)
+	data2 = json.loads(data.read())
+	return data2
+
 
 def getxfid_fromMS(msid):
-	furl = "https://api.xforce.ibmcloud.com/vulnerabilities/msid/%s" % msid
+	furl = BASEurl + "vulnerabilities/msid/%s" % msid
 
 	request = urllib2.Request(furl, None, headers)
 	data = urllib2.urlopen(request)
@@ -191,7 +201,7 @@ def getxfid_fromMS(msid):
 
 def getmsid(msid):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/vulnerabilities/msid/%s" % msid
+		furl = BASEurl + "vulnerabilities/msid/%s" % msid
 	
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
@@ -202,7 +212,7 @@ def getmsid(msid):
 	
 def getMalw(hash):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/malware/%s" % hash
+		furl = BASEurl + "malware/%s" % hash
 	
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
@@ -213,7 +223,7 @@ def getMalw(hash):
 
 def getIP(id):
 	try:
-		furl = "https://api.xforce.ibmcloud.com/casefiles/%s/attachments" % id
+		furl = BASEurl + "casefiles/%s/attachments" % id
 	
 		request = urllib2.Request(furl, None, headers)
 		data = urllib2.urlopen(request)
@@ -250,7 +260,7 @@ def intrIPs(cat=None):
 		size = 45
 	datar = dict() 
 	
-	furl = "https://api.xforce.ibmcloud.com/ipr?category=%s&startDate=%s&limit=%s" % (urllib.quote_plus(cata), YEST, size)
+	furl = BASEurl + "ipr?category=%s&startDate=%s&limit=%s" % (urllib.quote_plus(cata), YEST, size)
 	request = urllib2.Request(furl, None, headers)
 	try:
 		data = urllib2.urlopen(request)
@@ -293,7 +303,7 @@ if( options.s_string is not None ):
 elif options.coll is not None:
 	outfile = open(options.coll,"wb")
 	outfile.write("## "+str(datetime.datetime.utcnow())+"\n")
-	outfile.write(getColl())
+	outfile.write(getCase_Public())
 	outfile.close()
 	print "XForce Public Collections IP list updated and saved as %s" %  options.coll 
 elif options.ip is not None:
