@@ -142,7 +142,7 @@ def getVulnr():
 		data2 = json.loads(data.read())
 		return data2
 	except:
-		return {"xforce" : "No Data"}	
+		return {"IBM XForce Exchange" : "No Data"}	
 
 def getURL(url):
 	try:
@@ -152,7 +152,7 @@ def getURL(url):
 		data2 = json.loads(data.read())
 		return data2
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 	
 def getURLm(url):
 	try:
@@ -163,7 +163,7 @@ def getURLm(url):
 		data2 = json.loads(data.read())
 		return data2
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 		
 def getCase_Shared():
 	furl = BASEurl + "casefiles/shared" 
@@ -208,7 +208,7 @@ def getmsid(msid):
 		data2 = json.loads(data.read())
 		return data2
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 	
 def getMalw(hash):
 	try:
@@ -219,9 +219,9 @@ def getMalw(hash):
 		data2 = json.loads(data.read())
 		return data2
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 
-def getIP(id):
+def getDAMN(id):
 	try:
 		furl = BASEurl + "casefiles/%s/attachments" % id
 	
@@ -234,7 +234,7 @@ def getIP(id):
 				iplist.add(item["report"]["title"])
 		return iplist
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 	
 #- Spam
 #- Anonymisation Services
@@ -268,7 +268,7 @@ def intrIPs(cat=None):
 		datar1 = dict(datar.items() + data2.items())
 		datar = datar1
 	except:
-		return {"xforce" : "No Data"}
+		return {"IBM XForce Exchange" : "No Data"}
 	return datar
 	
 	

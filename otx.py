@@ -52,11 +52,14 @@ def URLip(value):
 	return json.loads(data.read())
 
 def URL(value):
-	furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/url/%s/general" % value
-	request = urllib2.Request(furl, None, headers)
-	data = urllib2.urlopen(request)
-	return json.loads(data.read())
-
+	try:
+		furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/url/%s/general" % value
+		request = urllib2.Request(furl, None, headers)
+		data = urllib2.urlopen(request)
+		return json.loads(data.read())
+	except:
+		return {"Alienvault OTX" : "No data"}
+	
 def CVE(value):
 	furl = "%s" % "https://otx.alienvault.com:443/api/v1/indicators/cve/%s/general" % value
 	request = urllib2.Request(furl, None, headers)

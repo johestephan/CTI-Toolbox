@@ -15,6 +15,9 @@ xfex_cred = ""
 #Virustotal
 vt_key = ""
 
+#Google APIKey
+go_key =
+
 # config for web, for a href
 LOCAL_LINK = ""
 
