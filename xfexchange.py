@@ -180,6 +180,13 @@ def getCase_Public():
 	data2 = json.loads(data.read())
 	return data2
 
+def getXPUdir():
+        furl = BASEurl + "signatures/xpu/directory"
+
+        request = urllib2.Request(furl, None, headers)
+        data = urllib2.urlopen(request)
+        data2 = json.loads(data.read())
+        return data2
 
 
 def getCase_by_Group(groupID):
