@@ -29,7 +29,7 @@ def getMD5(text):
 
 def getSHA256(text):
     thisset = set()
-    sha_r = re.compile(r"([a-fA-F\d]{40})")
+    sha_r = re.compile(r"([a-fA-F\d]{64})")
     for item in sha_r.findall(text):
        thisset.add(item)
     return thisset
