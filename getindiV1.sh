@@ -1,21 +1,21 @@
 FILE=$1
 
 echo ""
-echo "Scanning IPs:"
+echo "Scanning IPs: {zmeu|masscan|python|perl|curl|black|mui|jorgee}"
 echo "====================================="
-cat $FILE | egrep -a -i "{zmeu|masscan|python|perl|curl|black|mui}" | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" | sort -u
+cat $FILE | egrep -a -i "zmeu|masscan|python|perl|curl|black|mui|jorgee" | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" | sort -u
 
 echo ""
 echo "HTTP urls (object):"
 echo "====================================="
-cat $FILE | egrep -o "http[a-zA-Z0-9./:]*" | sort -u | cut -d " " -f 2
+cat $FILE | egrep -o "http://[ a-z:/0-9A-Z.-+]*" | sort -u | cut -d " " -f 2 | sort -u
 
 echo ""
-echo "WGET (objects):"
+echo "WGET/FTP (objects):"
 echo "====================================="
-cat $FILE | egrep -o "wget [a-zA-Z0-9./:]*" | sort -u | cut -d " " -f 2
+cat $FILE | egrep -o "wget[ a-z:/0-9.A-Z-]*" | sort -u | cut -d " " -f 2
 
 echo ""
-echo "TFTP (objects):"
+echo "cmd= (objects):"
 echo "====================================="
-cat $FILE | egrep -o "tftp [ a-zA-Z0-9\.\-]*" | sort -u
+cat $FILE | egrep -o "cmd=[ a-z:i/A-Z0-9.%'-]*" | sort -u
