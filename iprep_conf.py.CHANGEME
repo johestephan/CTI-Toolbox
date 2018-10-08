@@ -8,6 +8,7 @@ otx_authkey = ""
 # via https://exchange.xforce.ibmcloud.com/new
 # Settings -> API key
 xfex_cred = ""
+xfex_pass = ""
 
 #Virustotal 
 #via https://www.virustotal.com/

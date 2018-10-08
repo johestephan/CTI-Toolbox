@@ -7,6 +7,7 @@ import json
 import os.path
 import time
 import re
+import base64
 from datetime import datetime, timedelta
 
 import sys
@@ -20,9 +21,10 @@ yesterday = datetime.now() - timedelta(days=1)
 YEST = yesterday.strftime('20%y-%m-%dT00:00:00Z')
 
 
-headers = {"Authorization": "Basic %s " % IC.xfex_cred,
+headers = {"Authorization": "Basic %s " % base64.b64encode(IC.xfex_cred + ":" + IC.xfex_pass),
 		   "Accept": "application/json",
 		   'User-Agent': 'Mozilla 5.0'}
+
 
 def getPAM(text):
 	furl = BASEurl + "signatures/fulltext?q=%s" % text.strip()
@@ -101,8 +103,8 @@ def getip(ip):
 		return merged_dict
 		#return str(data2)
 		#return [data2[u"history"][0]["geo"]["country"], data2[u"score"], data2[u"reason"], data2[u"categoryDescriptions"]]
-	except:
-		return [str(data2), "Ups", "Ups", "ups"]
+	except Exception as e:
+		return [str(e), "Ups", "Ups", "ups"]
 
 def ixf_IPtoWeb(ip):
 	dataset = getip(ip)
