@@ -1,19 +1,34 @@
-# Basic configuration file
+# Basic configuration file template for CTI-Toolbox
+# Copy this file to 'iprep_conf.py' or use environment variables / .env
 
-#Alienvault OTX 
-#via https://otx.alienvault.com/api/
+# AlienVault OTX
+# Sign up & get API key: https://otx.alienvault.com/api/
 otx_authkey = ""
 
-#XForce exchange i
-# via https://exchange.xforce.ibmcloud.com/new
-# Settings -> API key
+# IBM X-Force Exchange
+# Basic auth token (base64 encoded 'key:password') or API key
+# Sign up: https://exchange.xforce.ibmcloud.com/
 xfex_cred = ""
 
-#Virustotal 
-#via https://www.virustotal.com/
+# VirusTotal
+# Sign up: https://www.virustotal.com/
 vt_key = ""
 
-#Google APIKey
-# via https://console.developers.google.com/apis/api/safebrowsing.googleapis.com/
+# Google SafeBrowsing API Key
+# Sign up: https://console.developers.google.com/apis/api/safebrowsing.googleapis.com/
 go_key = ""
 
+# PacketMail / SlowCook API Key
+# Sign up: https://www.packetmail.net/
+sc_apikey = ""
+pama_key = ""
+
+# MISP Configuration
+misp_url = "http://127.0.0.1:8080"
+misp_authkey = ""
+
+# Local web interface configuration
+LOCAL_LINK = "http://127.0.0.1:5010"
+LOCAL_PORT = "5010"
+
+VERSION = "1.1.0"

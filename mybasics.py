@@ -1,5 +1,3 @@
+"""Backward compatibility shim for mybasics."""
 
-
-def StoXML(selftype, value):
-    return '''"%s": %s\n''' % (selftype, value)
-
+from cti_toolbox.utils.formatting import *
